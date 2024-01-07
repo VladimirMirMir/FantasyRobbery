@@ -15,7 +15,7 @@ MonoBehaviour:
   applicationId:
     m_AppId: 480
   callbackTick_Milliseconds: 15
-  isDebugging: 1
+  isDebugging: 0
   server:
     autoInitialize: 0
     autoLogon: 0
@@ -32,8 +32,8 @@ MonoBehaviour:
     gameServerToken: See https://steamcommunity.com/dev/managegameservers
     isPasswordProtected: 0
     serverName: My Server Name
-    gameDescription: Fantasy Robbery
-    gameDirectory: 
+    gameDescription: Usually the name of your game
+    gameDirectory: e.g. its folder name
     isDedicated: 0
     maxPlayerCount: 4
     botPlayerCount: 0
