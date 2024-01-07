@@ -1,3 +1,4 @@
+using System;
 using FishNet.Managing;
 using Steamworks;
 using UnityEngine;
@@ -15,7 +16,9 @@ namespace FantasyRobbery.Scripts
         private Callback<GameLobbyJoinRequested_t> _joinRequested;
         private Callback<LobbyEnter_t> _lobbyEntered;
 
-        private void Awake()
+        public static ulong currentLobbyId;
+
+        public void Init()
         {
             _networkManager = GetComponent<NetworkManager>();
             _fishySteamworks = GetComponent<FishySteamworks.FishySteamworks>();
@@ -36,6 +39,12 @@ namespace FantasyRobbery.Scripts
             _lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
         }
 
+        private void OnDestroy()
+        {
+            _fishySteamworks.Shutdown();
+            SteamAPI.Shutdown();
+        }
+
         public static void CreateLobby(ELobbyType lobbyType, int maxPlayers)
         {
             SteamMatchmaking.CreateLobby(lobbyType, maxPlayers);
@@ -43,17 +52,34 @@ namespace FantasyRobbery.Scripts
 
         private void OnLobbyCreated(LobbyCreated_t callback)
         {
-            
+            if (callback.m_eResult != EResult.k_EResultOK)
+                return;
+            currentLobbyId = callback.m_ulSteamIDLobby;
+            SteamMatchmaking.SetLobbyData(new CSteamID(currentLobbyId), "HostAddress", SteamUser.GetSteamID().ToString());
+            SteamMatchmaking.SetLobbyData(new CSteamID(currentLobbyId), "name", SteamFriends.GetPersonaName() + "'s lobby");
+            _fishySteamworks.SetClientAddress(SteamUser.GetSteamID().ToString());
+            _fishySteamworks.StartConnection(true);
         }
 
         private void OnJoinRequest(GameLobbyJoinRequested_t callback)
         {
-            
+            SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
         }
 
         private void OnLobbyEntered(LobbyEnter_t callback)
         {
-            
+            currentLobbyId = callback.m_ulSteamIDLobby;
+            _fishySteamworks.SetClientAddress(SteamMatchmaking.GetLobbyData(new CSteamID(currentLobbyId), "HostAddress"));
+            _fishySteamworks.StartConnection(false);
+        }
+
+        public static void LeaveLobby()
+        {
+            SteamMatchmaking.LeaveLobby(new CSteamID(currentLobbyId));
+            currentLobbyId = 0;
+            s_instance._fishySteamworks.StopConnection(false);
+            if (s_instance._networkManager.IsServerStarted)
+                s_instance._fishySteamworks.StopConnection(true);
         }
     }
 }

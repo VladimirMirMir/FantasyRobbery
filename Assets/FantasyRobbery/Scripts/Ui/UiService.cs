@@ -10,21 +10,7 @@ namespace FantasyRobbery.Scripts.Ui
         private static UiService s_instance;
         private Dictionary<Type, Screen> _screens = new();
 
-        private void Awake()
-        {
-            if (s_instance != null)
-            {
-                Destroy(this);
-                return;
-            }
-
-            s_instance = this;
-        }
-
-        private void Start()
-        {
-            Show<MainMenuScreen>();
-        }
+        public void Init() => s_instance = this;
 
         private void Add<TScreen>() where TScreen : Screen
         {

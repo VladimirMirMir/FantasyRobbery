@@ -18,6 +18,28 @@ namespace FantasyRobbery.Scripts.Ui
                 UiService.Hide<MainMenuScreen>();
                 UiService.Show<CreateLobbyScreen>();
             });
+            joinBtn.onClick.AddListener(() =>
+            {
+                UiService.Hide<MainMenuScreen>();
+                UiService.Show<JoinLobbyScreen>();
+            });
+            settingsBtn.onClick.AddListener(() =>
+            {
+                UiService.Hide<MainMenuScreen>();
+                UiService.Show<SettingsScreen>();
+            });
+            infoBtn.onClick.AddListener(() =>
+            {
+                UiService.Hide<MainMenuScreen>();
+                UiService.Show<InfoScreen>();
+            });
+            quitBtn.onClick.AddListener(() =>
+            {
+                #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+                #endif
+                Application.Quit();
+            });
         }
     }
 }

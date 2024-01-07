@@ -506,6 +506,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8035ccc5803d44439bb6c017d9733ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hostBtn: {fileID: 8782375458258249702}
+  joinBtn: {fileID: 6038794431568744921}
+  settingsBtn: {fileID: 1740144322352528796}
+  infoBtn: {fileID: 5922723999568165261}
+  quitBtn: {fileID: 6270244340960502863}
 --- !u!1 &2546759162061177991
 GameObject:
   m_ObjectHideFlags: 0
