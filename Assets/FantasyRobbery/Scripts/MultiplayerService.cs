@@ -39,12 +39,6 @@ namespace FantasyRobbery.Scripts
             _lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
         }
 
-        private void OnDestroy()
-        {
-            _fishySteamworks.Shutdown();
-            SteamAPI.Shutdown();
-        }
-
         public static void CreateLobby(ELobbyType lobbyType, int maxPlayers)
         {
             SteamMatchmaking.CreateLobby(lobbyType, maxPlayers);
