@@ -4,6 +4,7 @@ using FishNet.Transporting;
 using Steamworks;
 using System;
 using System.Threading;
+using FishNet.Managing;
 using UnityEngine;
 
 namespace FishySteamworks.Client

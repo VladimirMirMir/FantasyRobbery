@@ -16,7 +16,7 @@ namespace FantasyRobbery.Scripts.Ui
             hostBtn.onClick.AddListener(() =>
             {
                 UiService.Hide<MainMenuScreen>();
-                UiService.Show<CreateLobbyScreen>();
+                //Launch game - Load Scene, Spawn Player
             });
             joinBtn.onClick.AddListener(() =>
             {

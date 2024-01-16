@@ -12,11 +12,19 @@ namespace FantasyRobbery.Scripts.Ui
         }
 
         protected virtual void OnShowComplete() {}
+        protected virtual void OnCloseStart() {}
+        protected virtual void OnCloseComplete() {}
 
         private IEnumerator Start()
         {
             yield return OnShowStart();
             OnShowComplete();
+        }
+
+        private void OnDestroy()
+        {
+            OnCloseStart();
+            OnCloseComplete();
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
+using FishNet.Managing;
 using UnityEngine;
 
 namespace FishySteamworks

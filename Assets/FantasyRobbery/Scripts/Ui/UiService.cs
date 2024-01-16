@@ -10,9 +10,13 @@ namespace FantasyRobbery.Scripts.Ui
         private static UiService s_instance;
         private Dictionary<Type, Screen> _screens = new();
 
-        public void Init() => s_instance = this;
+        public void Init()
+        {
+            if (s_instance == null)
+                s_instance = this;
+        }
 
-        private void Add<TScreen>() where TScreen : Screen
+        private void Add<TScreen>(Transform parent = null) where TScreen : Screen
         {
             //TODO : VM : Add content manager and addressables
             var type = typeof(TScreen);
@@ -23,7 +27,7 @@ namespace FantasyRobbery.Scripts.Ui
             if (_screens.ContainsKey(type))
                 throw new Exception($"You're trying to show {type.Name} twice!");
             
-            var instance = Instantiate(screen, transform);
+            var instance = Instantiate(screen, parent == null ? transform : parent);
             _screens.Add(type, instance);
         }
 
@@ -34,12 +38,12 @@ namespace FantasyRobbery.Scripts.Ui
                 Destroy(screen.gameObject);
         }
 
-        public static void Show<TScreen>(bool fresh = false) where TScreen : Screen
+        public static void Show<TScreen>(Transform parent = null, bool fresh = false) where TScreen : Screen
         {
             var type = typeof(TScreen);
             if (!s_instance._screens.TryGetValue(type, out var screen))
             {
-                s_instance.Add<TScreen>();
+                s_instance.Add<TScreen>(parent);
                 return;
             }
 
@@ -50,7 +54,7 @@ namespace FantasyRobbery.Scripts.Ui
             }
             
             s_instance.Delete<TScreen>();
-            s_instance.Add<TScreen>();
+            s_instance.Add<TScreen>(parent);
         }
 
         public static void Hide<TScreen>() where TScreen : Screen

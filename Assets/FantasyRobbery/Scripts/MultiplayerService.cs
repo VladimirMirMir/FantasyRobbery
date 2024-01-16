@@ -1,4 +1,3 @@
-using System;
 using FishNet.Managing;
 using Steamworks;
 using UnityEngine;
@@ -39,8 +38,16 @@ namespace FantasyRobbery.Scripts
             _lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
         }
 
+        private void OnDestroy()
+        {
+            _lobbyCreated.Unregister();
+            _joinRequested.Unregister();
+            _lobbyEntered.Unregister();
+        }
+
         public static void CreateLobby(ELobbyType lobbyType, int maxPlayers)
         {
+            Debug.Log($"Creating lobby for : {maxPlayers}; Type : {lobbyType}");
             SteamMatchmaking.CreateLobby(lobbyType, maxPlayers);
         }
 
@@ -49,10 +56,15 @@ namespace FantasyRobbery.Scripts
             if (callback.m_eResult != EResult.k_EResultOK)
                 return;
             currentLobbyId = callback.m_ulSteamIDLobby;
-            SteamMatchmaking.SetLobbyData(new CSteamID(currentLobbyId), "HostAddress", SteamUser.GetSteamID().ToString());
+            SteamMatchmaking.SetLobbyData(new CSteamID(currentLobbyId), "HostAddress", Steamworks.SteamUser.GetSteamID().ToString());
             SteamMatchmaking.SetLobbyData(new CSteamID(currentLobbyId), "name", SteamFriends.GetPersonaName() + "'s lobby");
-            _fishySteamworks.SetClientAddress(SteamUser.GetSteamID().ToString());
+            _fishySteamworks.SetClientAddress(Steamworks.SteamUser.GetSteamID().ToString());
             _fishySteamworks.StartConnection(true);
+        }
+
+        public static string GetLobbyData(string key)
+        {
+            return SteamMatchmaking.GetLobbyData(new CSteamID(currentLobbyId), key);
         }
 
         private void OnJoinRequest(GameLobbyJoinRequested_t callback)

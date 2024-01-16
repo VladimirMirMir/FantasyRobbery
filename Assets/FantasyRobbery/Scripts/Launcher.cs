@@ -17,4 +17,13 @@ public class Launcher : MonoBehaviour
     {
         UiService.Show<MainMenuScreen>();
     }
+
+    public void OnSteamLoadError(string errorCode)
+    {
+        Debug.Log(errorCode);
+        Application.Quit();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
 }
