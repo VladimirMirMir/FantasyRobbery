@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FantasyRobbery.Scripts.Ui
@@ -8,62 +9,105 @@ namespace FantasyRobbery.Scripts.Ui
     public class UiService : MonoBehaviour
     {
         private static UiService s_instance;
-        private Dictionary<Type, Screen> _screens = new();
+
+        [SerializeField] private Camera mainMenuCamera;
+        
+        private Dictionary<Type, Screen> _cachedScreens = new();
+        private Dictionary<Type, Screen> _showedScreens = new();
 
         public void Init()
         {
             if (s_instance == null)
+            {
                 s_instance = this;
+                DontDestroyOnLoad(this);
+            }
         }
 
-        private void Add<TScreen>(Transform parent = null) where TScreen : Screen
+        private TScreen Add<TScreen>(Transform parent = null) where TScreen : Screen
         {
             //TODO : VM : Add content manager and addressables
             var type = typeof(TScreen);
             var screen = Resources.Load<TScreen>($"Screens/{type.Name}");
             if (screen == null)
-                throw new Exception($"You're trying to show {type.Name}, but there is no resource for it!");
+            {
+                Debug.LogError($"You're trying to show {type.Name}, but there is no resource for it!");
+                return null;
+            }
 
-            if (_screens.ContainsKey(type))
-                throw new Exception($"You're trying to show {type.Name} twice!");
+            if (_cachedScreens.ContainsKey(type))
+            {
+                Debug.LogError($"You're trying to show {type.Name} twice!");
+                return null;
+            }
             
             var instance = Instantiate(screen, parent == null ? transform : parent);
-            _screens.Add(type, instance);
+            _cachedScreens.Add(type, instance);
+            _showedScreens.Add(type, instance);
+            return instance;
+        }
+
+        private void Delete(Type type)
+        {
+            if (_cachedScreens.Remove(type, out var screen))
+            {
+                _showedScreens.Remove(type);
+                Destroy(screen.gameObject);
+            }
         }
 
         private void Delete<TScreen>() where TScreen : Screen
         {
-            var type = typeof(TScreen);
-            if (_screens.Remove(type, out var screen))
-                Destroy(screen.gameObject);
+            Delete(typeof(TScreen));
         }
 
-        public static void Show<TScreen>(Transform parent = null, bool fresh = false) where TScreen : Screen
+        public static TScreen Show<TScreen>(bool hideOtherScreens = true, Transform parent = null, bool fresh = false) where TScreen : Screen
         {
-            var type = typeof(TScreen);
-            if (!s_instance._screens.TryGetValue(type, out var screen))
+            if (hideOtherScreens)
             {
-                s_instance.Add<TScreen>(parent);
-                return;
+                var showedScreens = s_instance._showedScreens.Keys.ToList();
+                foreach (var screenType in showedScreens)
+                    Hide(screenType);
+            }
+            
+            var type = typeof(TScreen);
+            if (!s_instance._cachedScreens.TryGetValue(type, out var screen))
+            {
+                return s_instance.Add<TScreen>(parent);
             }
 
             if (!fresh)
             {
                 screen.gameObject.SetActive(true);
-                return;
+                if (!s_instance._showedScreens.TryAdd(type, screen))
+                    Debug.LogWarning($"You're trying to show already showed screen : {type.Name}");
+                return (TScreen)screen;
             }
             
             s_instance.Delete<TScreen>();
-            s_instance.Add<TScreen>(parent);
+            return s_instance.Add<TScreen>(parent);
+        }
+
+        private static void Hide(Type screenType)
+        {
+            if (!s_instance._cachedScreens.TryGetValue(screenType, out var screen))
+            {
+                Debug.LogWarning($"You're trying to hide {screenType.Name}, but it wasn't added");
+                return;
+            }
+            
+            screen.gameObject.SetActive(false);
+            s_instance._showedScreens.Remove(screenType);
         }
 
         public static void Hide<TScreen>() where TScreen : Screen
         {
-            var type = typeof(TScreen);
-            if (!s_instance._screens.TryGetValue(type, out var screen))
-                Debug.LogWarning($"You're trying to hide {type.Name}, but it wasn't added");
-            else
-                screen.gameObject.SetActive(false);
+            Hide(typeof(TScreen));
+        }
+
+        public static void ToggleMainMenuCamera(bool value)
+        {
+            s_instance.mainMenuCamera.gameObject.SetActive(value);
         }
     }
 }

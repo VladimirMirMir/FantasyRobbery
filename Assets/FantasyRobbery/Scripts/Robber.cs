@@ -6,10 +6,13 @@ namespace FantasyRobbery.Scripts
 {
     public class Robber : NetworkBehaviour
     {
+        #region SerializedFields
+
         [Header("Technical")]
         [SerializeField] private CharacterController controller;
         [SerializeField] private Transform viewAnchor;
         [SerializeField] private Camera firstPersonCamera;
+        [SerializeField] private AudioListener audioListener;
 
         [Header("Sprint options")]
         [SerializeField] private bool canSprint = true;
@@ -25,8 +28,8 @@ namespace FantasyRobbery.Scripts
         [SerializeField] private float crouchSpeed = 1.5f;
         
         [Header("Look parameters")]
-        [SerializeField] private float lookSpeedX;
-        [SerializeField] private float lookSpeedY;
+        [SerializeField] private float lookSpeedX = 2;
+        [SerializeField] private float lookSpeedY = 2;
         [SerializeField] private float upperLookLimit = 80;
         [SerializeField] private float lowerLookLimit = 80;
 
@@ -42,24 +45,38 @@ namespace FantasyRobbery.Scripts
         [SerializeField] private Vector3 crouchingCenter = new Vector3(0, 0.5f, 0);
         [SerializeField] private Vector3 standingCenter = Vector3.zero;
         [SerializeField] private KeyCode crouchKey = KeyCode.LeftControl;
+
+        #endregion
+
+        #region Private
+
         private bool _isCrouching;
         private bool _duringCrouchAnimation;
-
         private Transform _cachedTransform;
         private Transform _cachedCameraTransform;
         private float _rotationX = 0;
         private Vector3 _moveDirection;
         private Vector2 _currentInput;
 
-        public bool CanMove { get; set; }
+        #endregion
+
+        #region Fields
+
+        public bool CanMove { get; set; } = true;
         public bool IsSprinting => canSprint && Input.GetKey(sprintKey);
         private bool ShouldJump => Input.GetKeyDown(jumpKey) && controller.isGrounded;
         private bool ShouldCrouch => Input.GetKeyDown(crouchKey) && !_duringCrouchAnimation && controller.isGrounded;
 
+        #endregion
+
         public override void OnStartClient()
         {
             if (!IsOwner)
+            {
+                firstPersonCamera.enabled = false;
+                audioListener.enabled = false;
                 enabled = false;
+            }
         }
 
         private void Awake()

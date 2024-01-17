@@ -15,6 +15,8 @@ namespace FantasyRobbery.Scripts.Ui
         protected virtual void OnCloseStart() {}
         protected virtual void OnCloseComplete() {}
 
+        public abstract void Initialize(params string[] args);
+
         private IEnumerator Start()
         {
             yield return OnShowStart();

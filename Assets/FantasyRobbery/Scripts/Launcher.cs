@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
-    [SerializeField] private UiService _uiService;
-    [SerializeField] private MultiplayerService _multiplayerService;
+    [SerializeField] private FishySteamworks.FishySteamworks fishySteamworks;
+    [SerializeField] private UiService uiService;
+    [SerializeField] private SteamLobbyService steamLobbyService;
 
     public void InitServices()
     {
-        _uiService.Init();
-        _multiplayerService.Init();
+        uiService.Init();
+        steamLobbyService.Init(fishySteamworks);
     }
     
     public void LoadMainMenu()

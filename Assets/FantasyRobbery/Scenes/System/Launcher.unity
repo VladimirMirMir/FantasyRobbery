@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &337939984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337939985}
+  - component: {fileID: 337939987}
+  m_Layer: 0
+  m_Name: SteamLobbyService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &337939985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337939984}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &337939987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337939984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4937d14402a4c71a79fc4c35e299fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishySteamworks: {fileID: 5382809066885305407}
 --- !u!1 &440069086
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,8 +212,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff66f41fb5b36440ea876c87d7c7f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiService: {fileID: 1065494480}
-  _multiplayerService: {fileID: 5382809066885305408}
+  fishySteamworks: {fileID: 5382809066885305407}
+  uiService: {fileID: 1065494480}
+  steamLobbyService: {fileID: 337939987}
+--- !u!1 &802927895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 802927896}
+  - component: {fileID: 802927898}
+  - component: {fileID: 802927897}
+  m_Layer: 0
+  m_Name: MultiplayerService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &802927896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802927895}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &802927897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802927895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 802927898}
+  <SerializedRootNetworkBehaviour>k__BackingField: {fileID: 0}
+  <NestedRootNetworkBehaviours>k__BackingField: []
+  SerializedTransformProperties:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 3406873204
+  <SceneId>k__BackingField: 14632408997083983801
+  <AssetPathHash>k__BackingField: 0
+--- !u!114 &802927898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802927895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1df8dd8bbc134ac3b03d6df78595fa75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 802927897}
+  _networkObjectCache: {fileID: 802927897}
+  robberPrefab: {fileID: 633475726068608423, guid: 13ac355c8b24b4242be436be8bae5b14, type: 3}
 --- !u!1 &868259078
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,12 +358,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868259078}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1065494479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1065494475
 GameObject:
@@ -315,7 +443,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -331,7 +459,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 868259081}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -351,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209e1eeac4c4487d80631197770d0ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuCamera: {fileID: 1809242236}
 --- !u!1 &1809242234
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +493,7 @@ GameObject:
   - component: {fileID: 1809242236}
   - component: {fileID: 1809242235}
   m_Layer: 0
-  m_Name: MainCamera
+  m_Name: MainMenuCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,21 +573,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3314606040373966101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3314606040373966106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 211a9f6ec51ddc14f908f5acc0cd0423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 346936430669101407, guid: 13ac355c8b24b4242be436be8bae5b14, type: 3}
-  _addToDefaultScene: 0
-  Spawns: []
 --- !u!4 &3314606040373966104
 Transform:
   m_ObjectHideFlags: 0
@@ -484,11 +599,10 @@ GameObject:
   - component: {fileID: 3314606040373966104}
   - component: {fileID: 3314606040373966107}
   - component: {fileID: 5382809066885305405}
-  - component: {fileID: 3314606040373966101}
   - component: {fileID: 5382809066885305407}
   - component: {fileID: 5382809066885305406}
-  - component: {fileID: 5382809066885305408}
   - component: {fileID: 5382809066885305409}
+  - component: {fileID: 5382809066885305410}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -569,18 +683,6 @@ MonoBehaviour:
   _maximumClients: 9001
   _peerToPeer: 1
   _clientAddress: 
---- !u!114 &5382809066885305408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3314606040373966106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4937d14402a4c71a79fc4c35e299fa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5382809066885305409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +738,21 @@ MonoBehaviour:
           m_StringArgument: Steam loading error
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5382809066885305410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3314606040373966106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211a9f6ec51ddc14f908f5acc0cd0423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPrefab: {fileID: 7807792497551321664, guid: f73acec3f7c494467a8c17ca51cb8beb, type: 3}
+  _addToDefaultScene: 1
+  Spawns: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -643,5 +760,6 @@ SceneRoots:
   - {fileID: 440069087}
   - {fileID: 3314606040373966104}
   - {fileID: 1065494479}
-  - {fileID: 868259081}
+  - {fileID: 337939985}
   - {fileID: 1809242237}
+  - {fileID: 802927896}

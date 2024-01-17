@@ -11,26 +11,25 @@ namespace FantasyRobbery.Scripts.Ui
         [SerializeField] private Button infoBtn;
         [SerializeField] private Button quitBtn;
 
+        public override void Initialize(params string[] args) {}
+        
         protected override void OnShowComplete()
         {
             hostBtn.onClick.AddListener(() =>
             {
-                UiService.Hide<MainMenuScreen>();
-                //Launch game - Load Scene, Spawn Player
+                SteamLobbyService.CreateLobby();
             });
             joinBtn.onClick.AddListener(() =>
             {
-                UiService.Hide<MainMenuScreen>();
-                UiService.Show<JoinLobbyScreen>();
+                //TODO : VM : Implement FindLobbyScreen matchmaking
+                //UiService.Show<FindLobbyScreen>();
             });
             settingsBtn.onClick.AddListener(() =>
             {
-                UiService.Hide<MainMenuScreen>();
                 UiService.Show<SettingsScreen>();
             });
             infoBtn.onClick.AddListener(() =>
             {
-                UiService.Hide<MainMenuScreen>();
                 UiService.Show<InfoScreen>();
             });
             quitBtn.onClick.AddListener(() =>

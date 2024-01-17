@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/FantasyRobbery/Scenes/System/Launcher.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/FantasyRobbery/Scenes/System/TestScene.unity
+    guid: a6865d1ebe6aa4648ac809a6ee535f6a
   m_configObjects: {}
