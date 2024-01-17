@@ -23,7 +23,6 @@ namespace FantasyRobbery.Scripts.Ui
         {
             startGameBtn.onClick.AddListener(() =>
             {
-                UiService.Hide<LobbyScreen>();
                 SteamLobbyService.LaunchGame();
             });
             leaveBtn.onClick.AddListener(() =>

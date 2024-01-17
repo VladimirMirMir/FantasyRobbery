@@ -1,8 +1,12 @@
+using System;
+using FantasyRobbery.Scripts.Ui;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing.Scened;
 using FishNet.Object;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using Screen = FantasyRobbery.Scripts.Ui.Screen;
 
 namespace FantasyRobbery.Scripts
 {
@@ -52,6 +56,23 @@ namespace FantasyRobbery.Scripts
             var spawnPoint = Random.insideUnitCircle * 3;
             var robber = Instantiate(robberPrefab, new Vector3(spawnPoint.x, 0, spawnPoint.y), Quaternion.identity);
             Spawn(robber, connection);
+        }
+
+        public static void HideLobbyScreenForAllPlayers()
+        {
+            s_instance.HideScreenServer();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void HideScreenServer()
+        {
+            HideScreenObserver();
+        }
+
+        [ObserversRpc]
+        private void HideScreenObserver()
+        {
+            UiService.Hide<LobbyScreen>();
         }
     }
 }

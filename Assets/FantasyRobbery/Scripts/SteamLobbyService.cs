@@ -54,6 +54,7 @@ namespace FantasyRobbery.Scripts
             UiService.ToggleMainMenuCamera(false);
             var connections = InstanceFinder.ServerManager.Clients.Values.ToArray();
             MultiplayerService.ChangeNetworkScene("TestScene", connections);
+            MultiplayerService.HideLobbyScreenForAllPlayers();
             MultiplayerService.SpawnRobbers(connections);
         }
 
