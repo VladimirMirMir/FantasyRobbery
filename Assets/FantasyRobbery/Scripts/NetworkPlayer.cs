@@ -170,6 +170,7 @@ namespace FantasyRobbery.Scripts
             {
                 if (_currentInteractable == null || hit.collider.gameObject.GetInstanceID() != _currentInteractable.InstanceId)
                 {
+                    _currentInteractable?.OnInteractionEnd(this);
                     _currentInteractable?.OnUnfocus();
                     hit.collider.TryGetComponent(out _currentInteractable);
                     _currentInteractable?.OnFocus();
