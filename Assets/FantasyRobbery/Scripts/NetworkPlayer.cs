@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FantasyRobbery.Scripts
 {
-    public class Robber : NetworkBehaviour
+    public class NetworkPlayer : NetworkBehaviour, IInteractor
     {
         #region SerializedFields
 
@@ -22,6 +22,10 @@ namespace FantasyRobbery.Scripts
         [SerializeField] private bool canJump = true;
         [SerializeField] private KeyCode jumpKey = KeyCode.Space;
 
+        [Header("Interaction options")]
+        [SerializeField] private float interactionDistance = 7f;
+        [SerializeField] private KeyCode interactionKey = KeyCode.E;
+        
         [Header("Movement parameters")]
         [SerializeField] private float moveSpeed = 3f;
         [SerializeField] private float sprintSpeed = 6f;
@@ -57,12 +61,15 @@ namespace FantasyRobbery.Scripts
         private float _rotationX = 0;
         private Vector3 _moveDirection;
         private Vector2 _currentInput;
+        private Vector3 _interactionViewPoint = new Vector3(0.5f, 0.5f, 0);
+        private IInteractable _currentInteractable;
 
         #endregion
 
         #region Fields
 
         public bool CanMove { get; set; } = true;
+        public bool CanInteract { get; set; } = true;
         public bool IsSprinting => canSprint && Input.GetKey(sprintKey);
         private bool ShouldJump => Input.GetKeyDown(jumpKey) && controller.isGrounded;
         private bool ShouldCrouch => Input.GetKeyDown(crouchKey) && !_duringCrouchAnimation && controller.isGrounded;
@@ -156,6 +163,32 @@ namespace FantasyRobbery.Scripts
             if (ShouldCrouch)
                 StartCoroutine(nameof(Crouch));
         }
+
+        private void HandleInteractCheck()
+        {
+            if (Physics.Raycast(firstPersonCamera.ViewportPointToRay(_interactionViewPoint), out var hit, interactionDistance))
+            {
+                if (_currentInteractable == null || hit.collider.gameObject.GetInstanceID() != _currentInteractable.InstanceId)
+                {
+                    _currentInteractable?.OnUnfocus();
+                    hit.collider.TryGetComponent(out _currentInteractable);
+                    _currentInteractable?.OnFocus();
+                }
+            }
+            else
+            {
+                _currentInteractable?.OnUnfocus();
+                _currentInteractable = null;
+            }
+        }
+
+        private void HandleInteractInput()
+        {
+            if (Input.GetKeyDown(interactionKey))
+                _currentInteractable?.OnInteractionStart(this);
+            if (Input.GetKeyUp(interactionKey))
+                _currentInteractable?.OnInteractionEnd(this);
+        }
         
         private void Update()
         {
@@ -170,6 +203,12 @@ namespace FantasyRobbery.Scripts
             
             if (canCrouch)
                 HandleCrouch();
+
+            if (CanInteract)
+            {
+                HandleInteractCheck();
+                HandleInteractInput();
+            }
             
             ApplyMovements();
         }
