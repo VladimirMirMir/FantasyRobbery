@@ -1,4 +1,3 @@
-using System;
 using FantasyRobbery.Scripts.Ui;
 using FishNet;
 using FishNet.Connection;
@@ -6,7 +5,6 @@ using FishNet.Managing.Scened;
 using FishNet.Object;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Screen = FantasyRobbery.Scripts.Ui.Screen;
 
 namespace FantasyRobbery.Scripts
 {
