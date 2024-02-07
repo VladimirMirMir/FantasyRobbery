@@ -1,4 +1,4 @@
-namespace FantasyRobbery.Scripts
+namespace FantasyRobbery.Scripts.Abstraction
 {
     public interface IInteractor
     {

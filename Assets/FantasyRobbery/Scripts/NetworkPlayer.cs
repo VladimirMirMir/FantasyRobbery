@@ -1,10 +1,11 @@
 using System.Collections;
+using FantasyRobbery.Scripts.Abstraction;
 using FishNet.Object;
 using UnityEngine;
 
 namespace FantasyRobbery.Scripts
 {
-    public class NetworkPlayer : NetworkBehaviour, IInteractor
+    public class NetworkPlayer : NetworkBehaviour, IInteractor, IGrabber
     {
         #region SerializedFields
 
@@ -13,6 +14,10 @@ namespace FantasyRobbery.Scripts
         [SerializeField] private Transform viewAnchor;
         [SerializeField] private Camera firstPersonCamera;
         [SerializeField] private AudioListener audioListener;
+
+        [Header("Grab options")]
+        //TODO : Replace to hero view
+        [SerializeField] private Transform grabAnchor;
 
         [Header("Sprint options")]
         [SerializeField] private bool canSprint = true;
@@ -212,6 +217,28 @@ namespace FantasyRobbery.Scripts
             }
             
             ApplyMovements();
+        }
+
+        public bool CanGrab()
+        {
+            if (!CanInteract)
+                return false;
+            
+            //if there is no slot -> false
+            
+            //if there is no free hand -> false
+            
+            return true;
+        }
+
+        public void Grab(ICanBeGrabbed canBeGrabbed)
+        {
+            if (!CanGrab())
+                return;
+            
+            canBeGrabbed.CachedTransform.SetParent(grabAnchor);
+            canBeGrabbed.CachedTransform.position = Vector3.zero;
+            canBeGrabbed.CachedTransform.rotation = Quaternion.identity;
         }
     }
 }

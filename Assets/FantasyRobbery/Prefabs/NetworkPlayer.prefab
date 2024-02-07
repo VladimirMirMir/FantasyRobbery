@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2424751748130705716}
+  - {fileID: 3542519729971680879}
   - {fileID: 1722975280587690011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,10 +107,13 @@ MonoBehaviour:
   viewAnchor: {fileID: 2424751748130705716}
   firstPersonCamera: {fileID: 7319374215490157851}
   audioListener: {fileID: 7071073983326232965}
+  grabAnchor: {fileID: 3542519729971680879}
   canSprint: 1
   sprintKey: 304
   canJump: 1
   jumpKey: 32
+  interactionDistance: 7
+  interactionKey: 101
   moveSpeed: 3
   sprintSpeed: 6
   crouchSpeed: 1.5
@@ -464,6 +468,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6961307348099708473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3542519729971680879}
+  m_Layer: 0
+  m_Name: GrabAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3542519729971680879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961307348099708473}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.1595139, y: 0.15332873, z: -0.14782384, w: 0.963947}
+  m_LocalPosition: {x: 0.479, y: 1.285, z: 0.982}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4147604647832734329}
+  m_LocalEulerAnglesHint: {x: 20.662, y: 15.398, z: -14.614}
 --- !u!1 &7534269706097684584
 GameObject:
   m_ObjectHideFlags: 0

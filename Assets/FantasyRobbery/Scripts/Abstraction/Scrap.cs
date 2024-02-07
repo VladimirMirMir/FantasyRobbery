@@ -1,11 +1,19 @@
+using FishNet.Object;
 using UnityEngine;
 
-namespace FantasyRobbery.Scripts
+namespace FantasyRobbery.Scripts.Abstraction
 {
-    public class Scrap : MonoBehaviour, IInteractable
+    public class Scrap : NetworkBehaviour, IInteractable, ICanBeGrabbed
     {
+        [SerializeField] private int minCost = 0;
+        [SerializeField] private int maxCost = 0;
+
+        private Transform _cachedTransform;
+        
         public int InstanceId => gameObject.GetInstanceID();
-        public float InteractDuration { get; set; } = 0;
+        public Transform CachedTransform => _cachedTransform ??= transform;
+        [field: SerializeField] public float InteractDuration { get; set; } = 0;
+        
         public void OnFocus()
         {
             Debug.Log($"Press \"E\" to grab : {gameObject.name}");
@@ -23,11 +31,8 @@ namespace FantasyRobbery.Scripts
 
         public void OnInteractionEnd(IInteractor interactor)
         {
-            if (interactor is NetworkPlayer player)
-            {
-                //player.PickUp(this);
-                Debug.Log($"Grabbed : {gameObject.name}");
-            }
+            if (interactor is IGrabber grabber)
+                grabber.Grab(this);
         }
     }
 }
